@@ -1,0 +1,17 @@
+name: Build & Release Lesson Module
+on: { push: { tags: ['v*'] } }
+permissions: { contents: write }
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '22', cache: 'npm' }
+      - working-directory: modules/cahier-texte
+        run: npm ci --legacy-peer-deps
+      - working-directory: modules/cahier-texte
+        run: node scripts/install.mjs --zip
+      - uses: softprops/action-gh-release@v2
+        with: { files: modules/cahier-texte/*.zip, generate_release_notes: true }
+        env: { GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}}

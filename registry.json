@@ -1,0 +1,27 @@
+{
+  "modules": [
+    {
+      "id": "kuma-module-cahier-texte",
+      "name": "Cahier de Texte (Côte d'Ivoire)",
+      "version": "1.0.0",
+      "category": "teaching",
+      "country": "CI",
+      "target": "primary",
+      "contract": "v1",
+      "repository": "https://github.com/perissosdigitalsolution-oss/kuma-module-cahier-texte",
+      "description": "Cahier de texte numérique avec suivi pédagogique et validation par la direction.",
+      "tags": [
+        "teaching",
+        "lesson-plans",
+        "parent-view",
+        "curriculum"
+      ],
+      "capabilities": {
+        "hasBridgeMode": true,
+        "supportsLessonPlans": true,
+        "supportsParentView": true,
+        "supportsValidation": true
+      }
+    }
+  ]
+}
