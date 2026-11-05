@@ -1,5 +1,5 @@
 const API = (typeof window !== 'undefined' && !['localhost','127.0.0.1'].includes(window.location.hostname) && !window.location.hostname.startsWith('192.168.') && !window.location.hostname.startsWith('10.'))
-    ? 'https://kuma-school-backend-production.kumaschool88.workers.dev/api/v1/modules/lessons'
+    ? (import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL.replace(/\/api\/v1$/, '') + '/api/v1/modules/lessons' : 'https://kuma-school-backend-production.kumaschool88.workers.dev/api/v1/modules/lessons')
     : '/api/v1/modules/lessons';
 export const LessonService = {
     async createPlan(data: { teacherId: string; classId: string; subject: string; title: string; description?: string; weekNumber: number; dayOfWeek?: number }) {
