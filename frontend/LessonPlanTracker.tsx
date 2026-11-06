@@ -1,13 +1,21 @@
 import React from 'react';
 import { LessonService } from './lesson.service';
 
-export default function LessonPlanTracker({ lang = 'fr' }) {
+interface Props {
+    lang?: 'fr' | 'en';
+    /** Explicit module API base (host injects it). */
+    apiBase?: string;
+    /** Token provider (host injects it). */
+    getToken?: () => string | null;
+}
+
+export default function LessonPlanTracker({ lang = 'fr', apiBase, getToken }: Props) {
     const [loading, setLoading] = React.useState(false);
     const [message, setMessage] = React.useState(null);
     const [summary, setSummary] = React.useState([]);
 
     React.useEffect(() => {
-        LessonService.getSummary('class_001').then(setSummary).catch(() => {});
+        LessonService.getSummary('class_001', { apiBase, getToken }).then(setSummary).catch(() => {});
     }, []);
 
     const handleAddPlan = async () => {
@@ -15,7 +23,7 @@ export default function LessonPlanTracker({ lang = 'fr' }) {
         if (!title) return;
         setLoading(true);
         try {
-            await LessonService.createPlan({ teacherId: 'teacher_1', classId: 'class_001', subject: 'Mathématiques', title, description: '', weekNumber: 1 });
+            await LessonService.createPlan({ teacherId: 'teacher_1', classId: 'class_001', subject: 'Mathématiques', title, description: '', weekNumber: 1 }, { apiBase, getToken });
             setMessage(lang === 'fr' ? 'Plan ajouté' : 'Lesson added');
         } catch(e) { setMessage(lang === 'fr' ? 'Erreur' : 'Error'); }
         setLoading(false);
