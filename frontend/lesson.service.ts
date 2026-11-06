@@ -46,7 +46,7 @@ export interface LessonOptions {
 
 export const LessonService = {
     async createPlan(data: { teacherId: string; classId: string; subject: string; title: string; description?: string; weekNumber: number; dayOfWeek?: number }, opts?: LessonOptions) {
-        const r = await fetch(`${resolveApiBase(opts?.apiBase)}/plan`, {
+        const r = await fetch(`${resolveApiBase(opts?.apiBase)}/v1/plan`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${resolveToken(opts?.getToken)}` },
             body: JSON.stringify(data)
@@ -55,13 +55,13 @@ export const LessonService = {
     },
     async getPlans(filters?: { class?: string; teacher?: string }, opts?: LessonOptions) {
         const q = new URLSearchParams(Object.entries(filters || {}).filter(([,v]) => v));
-        const r = await fetch(`${resolveApiBase(opts?.apiBase)}/plans?${q}`, {
+        const r = await fetch(`${resolveApiBase(opts?.apiBase)}/v1/plans?${q}`, {
             headers: { 'Authorization': `Bearer ${resolveToken(opts?.getToken)}` }
         });
         return r.json();
     },
     async getSummary(classId: string, opts?: LessonOptions) {
-        const r = await fetch(`${resolveApiBase(opts?.apiBase)}/summary/${classId}`, {
+        const r = await fetch(`${resolveApiBase(opts?.apiBase)}/v1/summary/${classId}`, {
             headers: { 'Authorization': `Bearer ${resolveToken(opts?.getToken)}` }
         });
         const d = await r.json();
